@@ -5,9 +5,37 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: thin;
+  scrollbar-color: #8585AD #4C4CFF;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #4C4CFF;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  border-radius: 0;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  min-width: 1280px;
+  height: 100vh;
+  min-height: 800px;
+  display: flex;
+  flex-direction: column;
 }
