@@ -3,15 +3,21 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { getIngridientById } from "../../utils";
+import { IngredientData } from "../../utils";
 
 export type ConstructorItemProps = {
   type?: "bottom" | "top";
   id: string;
   prefix?: string;
+  getIngridientById: (id: string) => IngredientData | undefined;
 };
 
-export const ConstructorItem = ({ type, id, prefix }: ConstructorItemProps) => {
+export const ConstructorItem = ({
+  type,
+  id,
+  prefix,
+  getIngridientById,
+}: ConstructorItemProps) => {
   const ingridient = getIngridientById(id);
 
   if (!ingridient) {
