@@ -1,15 +1,21 @@
 import { useMemo } from "react";
 
-import { grouptIngridients, IngredientType } from "../../utils";
+import { grouptIngridients, IngredientType, IngredientData } from "../../utils";
 
 import { Tabs } from "../Tabs";
 import { BurgerIngredientsSection } from "../BurgerIngredientsSection";
 import styles from "./BurgerIngredients.module.css";
 
-export const BurgerIngredients = () => {
+export type BurgerIngredientsProps = {
+  ingredientsData: IngredientData[];
+};
+
+export const BurgerIngredients = ({
+  ingredientsData,
+}: BurgerIngredientsProps) => {
   const ingredients = useMemo(() => {
-    return grouptIngridients();
-  }, []);
+    return grouptIngridients(ingredientsData);
+  }, [ingredientsData]);
 
   return (
     <>

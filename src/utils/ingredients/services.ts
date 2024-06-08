@@ -1,11 +1,13 @@
 import { IngredientType, IngredientData } from "./types";
-import { ingredientsData } from "./data";
 
-export const getIngridientById = (id?: string) => {
+export const findIngridientById = (
+  ingredientsData: IngredientData[],
+  id: string
+) => {
   return ingredientsData.find((item) => item._id === id);
 };
 
-export const grouptIngridients = () => {
+export const grouptIngridients = (ingredientsData: IngredientData[]) => {
   return ingredientsData.reduce<Record<IngredientType, IngredientData[]>>(
     (acc, ingredientData) => {
       if (acc[ingredientData.type]) {

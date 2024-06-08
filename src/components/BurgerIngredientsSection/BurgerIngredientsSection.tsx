@@ -21,7 +21,7 @@ export const BurgerIngredientsSection = ({
         {items.map((item) => {
           return (
             <li className={cn(styles.item, "p-3 pb-5")} key={item._id}>
-              <BurgerIngredient id={item._id} />
+              <BurgerIngredient {...item} />
             </li>
           );
         })}

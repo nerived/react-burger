@@ -1,0 +1,24 @@
+.contetn {
+  text-align: center;
+}
+
+.icon {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0;
+}
+
+.mark svg {
+  width: 48px;
+  height: 48px;
+}
