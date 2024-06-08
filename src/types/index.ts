@@ -1,3 +1,13 @@
+export type CommonResult = {
+  success: boolean;
+  data?: IngredientData[];
+  reason?: string;
+};
+
+export type CommonError = {
+  data: string;
+};
+
 export type IngredientData = {
   _id: string;
   name: string;
@@ -12,6 +22,8 @@ export type IngredientData = {
   image_large: string;
   __v: number;
 };
+
+export type Ingredient = IngredientData & { count?: number };
 
 export enum IngredientType {
   BUNN = "bun",

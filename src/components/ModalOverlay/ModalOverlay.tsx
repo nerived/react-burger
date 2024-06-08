@@ -1,8 +1,3 @@
-import {
-  ConstructorElement,
-  DragIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-
 import styles from "./ModalOverlay.module.css";
 
 export type ModalOverlayProps = {

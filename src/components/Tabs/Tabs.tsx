@@ -1,8 +1,7 @@
 import { useState } from "react";
-
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { TABS, TYPE_TO_NAME } from "../../utils";
+import { TABS, TYPE_TO_NAME } from "../../types";
 
 import styles from "./Tabs.module.css";
 

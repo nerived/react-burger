@@ -9,10 +9,6 @@
   align-items: center;
 }
 
-.start {
-  display: flex;
-  align-items: center;
-}
 
 .empty {
   padding-left: 48px;

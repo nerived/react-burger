@@ -1,0 +1,14 @@
+.container {
+  height: 100%;
+  padding: 56px;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  color: #FF575F;
+  font-size: 32px;
+  font-weight: 700;
+}

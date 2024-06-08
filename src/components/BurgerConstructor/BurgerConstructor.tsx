@@ -1,86 +1,64 @@
-import { useState } from "react";
+import { useCallback } from "react";
+
+import { useSelector } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
+
 import {
-  CurrencyIcon,
-  Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import cn from "classnames";
+  burgerConstructorSelectors,
+  updateBunId,
+  ingredientAdded,
+  updateIngredientCount,
+} from "../../services";
+import { IngredientType } from "../../types";
+import { useAppDispatch } from "../../store";
+import { ID_SPLITER } from "../../constants";
 
-import { IngredientData } from "../../utils";
-import { useModal } from "../../hooks";
+import { Order } from "../Order";
+import { BurgerConstructorBun } from "../BurgerConstructorBun";
+import { BurgerConstructorMiddle } from "../BurgerConstructorMiddle";
 
-import { Modal } from "../Modal";
-import { OrderDetails } from "../OrderDetails";
-import { ConstructorItem } from "../ConstructorItem";
+export const BurgerConstructor = () => {
+  const bunId = useSelector(burgerConstructorSelectors.getBunId);
+  const dispatch = useAppDispatch();
 
-import styles from "./BurgerConstructor.module.css";
+  const handleDrop = useCallback(
+    (itemId: any) => {
+      const modifyId = itemId.id + ID_SPLITER + nanoid(9);
+      const bunIngridientId = bunId.split(ID_SPLITER)[0];
 
-export type BurgerConstructorProps = {
-  getIngridientById: (id: string) => IngredientData | undefined;
-};
+      if (itemId.type === IngredientType.BUNN) {
+        dispatch(updateBunId(modifyId));
 
-const selectedIngridients = [
-  "643d69a5c3f7b9001cfa0941",
-  "643d69a5c3f7b9001cfa093e",
-  "643d69a5c3f7b9001cfa0942",
-  "643d69a5c3f7b9001cfa0943",
-  "643d69a5c3f7b9001cfa0940",
-  "643d69a5c3f7b9001cfa093d",
-];
-
-export const BurgerConstructor = ({
-  getIngridientById,
-}: BurgerConstructorProps) => {
-  const { isModalOpen, openModal, closeModal } = useModal();
-  const orderModal = (
-    <Modal onClose={closeModal}>
-      <OrderDetails id="034536" />
-    </Modal>
+        dispatch(updateIngredientCount({ id: bunIngridientId, count: 0 }));
+        dispatch(updateIngredientCount({ id: itemId.id, count: 2 }));
+      } else {
+        dispatch(ingredientAdded(modifyId));
+        dispatch(
+          updateIngredientCount({ id: itemId.id, count: itemId.count + 1 })
+        );
+      }
+    },
+    [dispatch, bunId]
   );
 
   return (
     <>
-      <div className="pb-10" />
-      <section className={cn(styles.start, "pl-4 pr-4  pb-4 pt-25")}>
-        <ConstructorItem
-          type="top"
-          getIngridientById={getIngridientById}
-          id="643d69a5c3f7b9001cfa093c"
-          prefix=" (верх)"
-        />
-      </section>
-      <ul className={cn(styles.list, "pl-4 pr-4 ")}>
-        {selectedIngridients.map((ingridientId) => {
-          return (
-            <li key={ingridientId} className={cn(styles.item, "pb-4")}>
-              <ConstructorItem
-                id={ingridientId}
-                getIngridientById={getIngridientById}
-              />
-            </li>
-          );
-        })}
-      </ul>
-      <section className={cn(styles.start, "pb-4 pt-4 pl-4 pr-4 ")}>
-        <ConstructorItem
-          type="bottom"
-          getIngridientById={getIngridientById}
-          id="643d69a5c3f7b9001cfa093c"
-          prefix=" (низ)"
-        />
-      </section>
-      <div className={cn(styles.total, "pt-6 pl-4 pr-4")}>
-        <span className={cn("text text_type_digits-medium")}>610</span>
-        <CurrencyIcon type="primary" /> <div className="pr-10"></div>
-        <Button
-          htmlType="button"
-          type="primary"
-          size="large"
-          onClick={openModal}
-        >
-          Оформить заказ
-        </Button>
-        {isModalOpen && orderModal}
-      </div>
+      <div className="pb-20" />
+      <div className="pb-1" />
+      <BurgerConstructorBun
+        bunId={bunId}
+        type={"top"}
+        prefix=" (верх)"
+        handleDrop={handleDrop}
+      />
+      <BurgerConstructorMiddle handleDrop={handleDrop} />
+      <BurgerConstructorBun
+        bunId={bunId}
+        type={"bottom"}
+        prefix=" (низ)"
+        handleDrop={handleDrop}
+      />
+      <Order />
     </>
   );
 };

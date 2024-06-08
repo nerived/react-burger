@@ -1,20 +1,24 @@
 import { useMemo } from "react";
+import { useSelector } from "react-redux";
 
-import { grouptIngridients, IngredientType, IngredientData } from "../../utils";
+import { ingredientsSelectors } from "../../services";
+import { Ingredient, IngredientType } from "../../types";
+import { ingredientsServices } from "../../services";
 
 import { Tabs } from "../Tabs";
 import { BurgerIngredientsSection } from "../BurgerIngredientsSection";
+
 import styles from "./BurgerIngredients.module.css";
 
 export type BurgerIngredientsProps = {
-  ingredientsData: IngredientData[];
+  ingredientsData: Ingredient[];
 };
 
-export const BurgerIngredients = ({
-  ingredientsData,
-}: BurgerIngredientsProps) => {
+export const BurgerIngredients = () => {
+  const ingredientsData = useSelector(ingredientsSelectors.getIngredients);
+
   const ingredients = useMemo(() => {
-    return grouptIngridients(ingredientsData);
+    return ingredientsServices.grouptIngredients(ingredientsData);
   }, [ingredientsData]);
 
   return (

@@ -1,13 +1,14 @@
 import cn from "classnames";
 
-import { IngredientData, IngredientType, TYPE_TO_NAME } from "../../utils";
+import { Ingredient, IngredientType, TYPE_TO_NAME } from "../../types";
 
 import { BurgerIngredient } from "../BurgerIngredient";
+
 import styles from "./BurgerIngredientsSection.module.css";
 
 export type BurgerIngredientsSectionProps = {
   type: IngredientType;
-  items: IngredientData[];
+  items: Ingredient[];
 };
 
 export const BurgerIngredientsSection = ({
