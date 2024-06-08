@@ -6,6 +6,7 @@ import {
 import cn from "classnames";
 
 import { IngredientData } from "../../utils";
+import { useModal } from "../../hooks";
 
 import { Modal } from "../Modal";
 import { OrderDetails } from "../OrderDetails";
@@ -29,18 +30,9 @@ const selectedIngridients = [
 export const BurgerConstructor = ({
   getIngridientById,
 }: BurgerConstructorProps) => {
-  const [isShowOrderModal, setIsShowOrderModal] = useState(false);
-
-  const handleOpenModal = () => {
-    setIsShowOrderModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsShowOrderModal(false);
-  };
-
+  const { isModalOpen, openModal, closeModal } = useModal();
   const orderModal = (
-    <Modal onClose={handleCloseModal}>
+    <Modal onClose={closeModal}>
       <OrderDetails id="034536" />
     </Modal>
   );
@@ -83,11 +75,11 @@ export const BurgerConstructor = ({
           htmlType="button"
           type="primary"
           size="large"
-          onClick={handleOpenModal}
+          onClick={openModal}
         >
           Оформить заказ
         </Button>
-        {isShowOrderModal && orderModal}
+        {isModalOpen && orderModal}
       </div>
     </>
   );

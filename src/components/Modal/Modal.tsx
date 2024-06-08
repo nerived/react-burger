@@ -1,3 +1,4 @@
+import { JSX, PropsWithChildren } from "react";
 import ReactDOM from "react-dom";
 import cn from "classnames";
 
@@ -7,7 +8,12 @@ import styles from "./Modal.module.css";
 
 const modalRoot = document.getElementById("modal");
 
-export const Modal = ({ children, header, onClose }: any) => {
+export type ModalProps = PropsWithChildren & {
+  header?: JSX.Element;
+  onClose: () => void;
+};
+
+export const Modal = ({ children, header, onClose }: ModalProps) => {
   return ReactDOM.createPortal(
     <div className={styles.root}>
       <ModalOverlay onClose={onClose} />

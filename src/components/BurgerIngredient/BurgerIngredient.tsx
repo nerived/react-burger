@@ -1,4 +1,3 @@
-import { useState } from "react";
 import cn from "classnames";
 import {
   Counter,
@@ -6,6 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { IngredientData } from "../../utils";
+import { useModal } from "../../hooks";
 
 import { Modal } from "../Modal";
 import { IngredientDetails } from "../IngredientDetails";
@@ -13,20 +13,12 @@ import { IngredientDetails } from "../IngredientDetails";
 import styles from "./BurgerIngredient.module.css";
 
 export const BurgerIngredient = (props: IngredientData) => {
-  const [isShowIngridientModal, setIsShowIngridientModal] = useState(false);
   const { price, name, proteins, image } = props;
-
-  const handleOpenModal = () => {
-    setIsShowIngridientModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsShowIngridientModal(false);
-  };
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const ingridientModal = (
     <Modal
-      onClose={handleCloseModal}
+      onClose={closeModal}
       header={<h3 className="text text_type_main-large">Детали ингредиента</h3>}
     >
       <IngredientDetails {...props} />
@@ -35,7 +27,7 @@ export const BurgerIngredient = (props: IngredientData) => {
 
   return (
     <>
-      <section className={styles.item} onClick={handleOpenModal}>
+      <section className={styles.item} onClick={openModal}>
         <Counter count={proteins} size="default" />
         <div className={cn(styles.img, "pl-4 pr-4")}>
           <img src={image} alt={name} />
@@ -52,7 +44,7 @@ export const BurgerIngredient = (props: IngredientData) => {
           {name}
         </div>
       </section>
-      {isShowIngridientModal && ingridientModal}
+      {isModalOpen && ingridientModal}
     </>
   );
 };

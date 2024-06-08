@@ -1,10 +1,11 @@
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { JSX } from "react";
 import cn from "classnames";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./ModalHeader.module.css";
 
 export type ModalHeaderProps = {
-  children?: any;
+  children?: JSX.Element;
   onClose: () => void;
 };
 

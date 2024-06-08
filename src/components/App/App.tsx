@@ -14,13 +14,19 @@ export const App = () => {
   const [ingredientsData, setIngredientsData] = useState<IngredientData[]>([]);
 
   const getApiData = async () => {
-    const response = await fetch(API_INGRIDIENTS).then((response) =>
-      response.json()
-    );
-
-    if (response?.data) {
-      setIngredientsData(response?.data);
-    }
+    fetch(API_INGRIDIENTS)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Ошибка ${response.status}`);
+      })
+      .then((response) => {
+        setIngredientsData(response?.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const getIngridientById = useCallback(
