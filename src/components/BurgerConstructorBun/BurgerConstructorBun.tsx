@@ -1,6 +1,8 @@
 import cn from "classnames";
 import { useDrop } from "react-dnd";
 
+import { DNDIngredientItem } from "../../types";
+
 import { ConstructorItem, ConstructorItemProps } from "../ConstructorItem";
 
 import styles from "./BurgerConstructorBun.module.css";
@@ -9,7 +11,7 @@ export type BurgerConstructorBunProps = {
   bunId: string;
   type: ConstructorItemProps["type"];
   prefix: string;
-  handleDrop: (item: any) => void;
+  handleDrop: (item: DNDIngredientItem) => void;
 };
 
 export const BurgerConstructorBun = ({
@@ -18,12 +20,16 @@ export const BurgerConstructorBun = ({
   prefix,
   handleDrop,
 }: BurgerConstructorBunProps) => {
-  const [{ isHover }, dropTarget] = useDrop({
+  const [{ isHover }, dropTarget] = useDrop<
+    DNDIngredientItem,
+    unknown,
+    { isHover: boolean }
+  >({
     accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
-    drop(itemId: any) {
+    drop(itemId) {
       handleDrop(itemId);
     },
   });

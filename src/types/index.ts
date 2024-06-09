@@ -42,3 +42,9 @@ export const TABS = [
   IngredientType.MAIN,
   IngredientType.SAUCE,
 ];
+
+export type DNDIngredientItem = {
+  id: string;
+  type: IngredientType;
+  count: number;
+};

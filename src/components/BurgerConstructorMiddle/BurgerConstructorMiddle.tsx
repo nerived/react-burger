@@ -1,15 +1,18 @@
+import { useCallback } from "react";
 import cn from "classnames";
 import { useDrop } from "react-dnd";
 import { useSelector } from "react-redux";
 
-import { burgerConstructorSelectors } from "../../services";
+import { burgerConstructorSelectors, updateSorting } from "../../services";
+import { useAppDispatch } from "../../store";
+import { DNDIngredientItem } from "../../types";
 
-import { ConstructorItem } from "../ConstructorItem";
+import { ConstructorItemDnd } from "../ConstructorItemDnd";
 
 import styles from "./BurgerConstructorMiddle.module.css";
 
 export type BurgerConstructorMiddleProps = {
-  handleDrop: (item: any) => void;
+  handleDrop: (item: DNDIngredientItem) => void;
 };
 
 export const BurgerConstructorMiddle = ({
@@ -18,16 +21,31 @@ export const BurgerConstructorMiddle = ({
   const ingredientIds = useSelector(
     burgerConstructorSelectors.getConstructorIngredientIds
   );
+  const dispatch = useAppDispatch();
 
-  const [{ isHover }, dropTarget] = useDrop({
+  const [{ isHover }, dropTarget] = useDrop<
+    DNDIngredientItem,
+    unknown,
+    { isHover: boolean }
+  >({
     accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
-    drop(itemId: any) {
+    drop(itemId) {
       handleDrop(itemId);
     },
   });
+
+  const moveIngredient = useCallback(
+    (curIndex: number, nextIndex: number) => {
+      const updateFilling = [...ingredientIds];
+      updateFilling.splice(nextIndex, 0, updateFilling.splice(curIndex, 1)[0]);
+
+      dispatch(updateSorting(updateFilling));
+    },
+    [ingredientIds, dispatch]
+  );
 
   if (!ingredientIds.length) {
     return (
@@ -52,9 +70,12 @@ export const BurgerConstructorMiddle = ({
     >
       {ingredientIds.map((ingredientId, index) => {
         return (
-          <li key={ingredientId} className={cn(styles.item, "pb-4")}>
-            <ConstructorItem modifyId={ingredientId} />
-          </li>
+          <ConstructorItemDnd
+            key={ingredientId}
+            ingredientId={ingredientId}
+            index={index}
+            moveIngredient={moveIngredient}
+          />
         );
       })}
     </ul>

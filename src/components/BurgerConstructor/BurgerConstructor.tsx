@@ -9,7 +9,7 @@ import {
   ingredientAdded,
   updateIngredientCount,
 } from "../../services";
-import { IngredientType } from "../../types";
+import { IngredientType, DNDIngredientItem } from "../../types";
 import { useAppDispatch } from "../../store";
 import { ID_SPLITER } from "../../constants";
 
@@ -22,7 +22,7 @@ export const BurgerConstructor = () => {
   const dispatch = useAppDispatch();
 
   const handleDrop = useCallback(
-    (itemId: any) => {
+    (itemId: DNDIngredientItem) => {
       const modifyId = itemId.id + ID_SPLITER + nanoid(9);
       const bunIngridientId = bunId.split(ID_SPLITER)[0];
 

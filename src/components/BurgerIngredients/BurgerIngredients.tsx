@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useRef, useState, useCallback } from "react";
+import { useMemo, useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
 

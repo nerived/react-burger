@@ -18,6 +18,9 @@ export const burgerConstructorSlice = createSlice({
     ingredientAdded(state, action: PayloadAction<string>) {
       state.ingredientIds.push(action.payload);
     },
+    updateSorting(state, action: PayloadAction<string[]>) {
+      state.ingredientIds = action.payload;
+    },
     ingredientDeleted(state, action: PayloadAction<string>) {
       const newIngredientIds = state.ingredientIds.filter(
         (ingredient) => ingredient !== action.payload
@@ -35,6 +38,7 @@ export const {
   ingredientAdded,
   ingredientDeleted,
   resetConstructor,
+  updateSorting,
 } = burgerConstructorSlice.actions;
 
 export const burgerConstructorReducer = burgerConstructorSlice.reducer;

@@ -8,7 +8,7 @@ import { useDrag } from "react-dnd";
 
 import { useAppDispatch } from "../../store";
 import { useModal } from "../../hooks";
-import { Ingredient } from "../../types";
+import { Ingredient, DNDIngredientItem } from "../../types";
 import { resetIngredientDetails, addIngredientDetails } from "../../services";
 
 import { IngredientDetails } from "../IngredientDetails";
@@ -31,7 +31,11 @@ export const BurgerIngredient = (props: Ingredient) => {
     openModal();
   };
 
-  const [{ opacity }, drag] = useDrag({
+  const [{ opacity }, drag] = useDrag<
+    DNDIngredientItem,
+    unknown,
+    { opacity: number }
+  >({
     type: "ingredient",
     item: { id: _id, type, count },
     collect: (monitor) => ({
