@@ -59,7 +59,7 @@ export const Order = () => {
     dispatch(resetOrderDetails());
   }, [closeModal, dispatch]);
 
-  const handleOpenModal = useCallback(async () => {
+  const handleOrderClick = useCallback(async () => {
     await dispatch(orderDetailsThunks.sendOrderData({ ingredients: ids }));
     dispatch(resetIngredientsCount());
     dispatch(resetConstructor());
@@ -74,7 +74,8 @@ export const Order = () => {
         htmlType="button"
         type="primary"
         size="large"
-        onClick={handleOpenModal}
+        disabled={!ids[0]}
+        onClick={handleOrderClick}
       >
         Оформить заказ
       </Button>

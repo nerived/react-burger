@@ -1,31 +1,27 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { API_DOMAIN } from "../../constants";
-import { IngredientData, CommonResult } from "../../types";
+import { IngredientData, CommonError } from "../../types";
+import { request } from "../../api";
+
+type IngredientsValue = {
+  success: true;
+  data: IngredientData[];
+};
 
 export const fetchIngredients = createAsyncThunk<
   IngredientData[],
   undefined,
   {
     fulfillWithValue: IngredientData[];
-    rejectValue: CommonResult;
+    rejectValue: CommonError;
   }
 >("ingredients/fetch", async (_, { fulfillWithValue, rejectWithValue }) => {
-  try {
-    const responseRaw = await fetch(`${API_DOMAIN}/ingredients`);
-    if (responseRaw.ok) {
-      const payload = await responseRaw.json();
+  const value = await request<IngredientsValue>(`${API_DOMAIN}/ingredients`);
 
-      if (payload.success) {
-        return fulfillWithValue(payload.data);
-      }
-    }
-
-    return rejectWithValue({
-      success: false,
-      reason: `Ошибка ${responseRaw.status}`,
-    });
-  } catch (err) {
-    return rejectWithValue({ success: false, reason: "Техническая ошибка" });
+  if (value.success) {
+    return fulfillWithValue(value.data);
   }
+
+  return rejectWithValue(value);
 });

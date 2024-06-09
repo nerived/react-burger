@@ -1,11 +1,6 @@
-export type CommonResult = {
-  success: boolean;
-  data?: IngredientData[];
-  reason?: string;
-};
-
 export type CommonError = {
-  data: string;
+  success: false;
+  reason: string;
 };
 
 export type IngredientData = {

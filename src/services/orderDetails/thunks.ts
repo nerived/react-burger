@@ -1,45 +1,41 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { API_DOMAIN } from "../../constants";
-import { CommonResult } from "../../types";
+import { CommonError } from "../../types";
+import { request } from "../../api";
 
 import { OrderDetailsState } from "./types";
+
+type OrderDetailsValue = {
+  success: true;
+  name: string;
+  order: {
+    number: number;
+  };
+};
 
 export const sendOrderData = createAsyncThunk<
   OrderDetailsState,
   { ingredients: string[] },
   {
     fulfillWithValue: OrderDetailsState;
-    rejectValue: CommonResult;
+    rejectValue: CommonError;
   }
->(
-  "orderDetails/order",
-  async (data, { fulfillWithValue, rejectWithValue, getState }) => {
-    try {
-      const responseRaw = await fetch(`${API_DOMAIN}/orders`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(data),
-      });
-      if (responseRaw.ok) {
-        const payload = await responseRaw.json();
+>("orderDetails/order", async (data, { fulfillWithValue, rejectWithValue }) => {
+  const value = await request<OrderDetailsValue>(`${API_DOMAIN}/orders`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify(data),
+  });
 
-        if (payload.success) {
-          return fulfillWithValue({
-            name: payload.name,
-            number: payload.order.number,
-          });
-        }
-      }
-
-      return rejectWithValue({
-        success: false,
-        reason: `Ошибка ${responseRaw.status}`,
-      });
-    } catch (err) {
-      return rejectWithValue({ success: false, reason: "Техническая ошибка" });
-    }
+  if (value.success) {
+    return fulfillWithValue({
+      name: value.name,
+      number: value.order.number,
+    });
   }
-);
+
+  return rejectWithValue(value);
+});
