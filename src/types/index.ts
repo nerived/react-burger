@@ -39,6 +39,6 @@ export const TYPE_TO_NAME = {
 
 export const TABS = [
   IngredientType.BUNN,
-  IngredientType.SAUCE,
   IngredientType.MAIN,
+  IngredientType.SAUCE,
 ];
