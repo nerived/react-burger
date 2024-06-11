@@ -1,34 +1,58 @@
+import { useCallback } from "react";
 import cn from "classnames";
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDrag } from "react-dnd";
 
-import { IngredientData } from "../../utils";
+import { useAppDispatch } from "../../store";
 import { useModal } from "../../hooks";
+import { Ingredient, DNDIngredientItem } from "../../types";
+import { resetIngredientDetails, addIngredientDetails } from "../../services";
 
-import { Modal } from "../Modal";
 import { IngredientDetails } from "../IngredientDetails";
 
 import styles from "./BurgerIngredient.module.css";
 
-export const BurgerIngredient = (props: IngredientData) => {
-  const { price, name, proteins, image } = props;
+export const BurgerIngredient = (props: Ingredient) => {
+  const { price, name, image, count = 0, _id, type } = props;
+  const dispatch = useAppDispatch();
+
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const ingridientModal = (
-    <Modal
-      onClose={closeModal}
-      header={<h3 className="text text_type_main-large">Детали ингредиента</h3>}
-    >
-      <IngredientDetails {...props} />
-    </Modal>
-  );
+  const handleCloseModal = useCallback(() => {
+    closeModal();
+    dispatch(resetIngredientDetails());
+  }, [closeModal, dispatch]);
+
+  const handleOpenModal = () => {
+    dispatch(addIngredientDetails(props));
+    openModal();
+  };
+
+  const [{ opacity }, drag] = useDrag<
+    DNDIngredientItem,
+    unknown,
+    { opacity: number }
+  >({
+    type: "ingredient",
+    item: { id: _id, type, count },
+    collect: (monitor) => ({
+      opacity: monitor.isDragging() ? 0.5 : 1,
+    }),
+  });
 
   return (
     <>
-      <section className={styles.item} onClick={openModal}>
-        <Counter count={proteins} size="default" />
+      <section
+        className={styles.item}
+        onClick={handleOpenModal}
+        draggable
+        ref={drag}
+        style={{ opacity }}
+      >
+        {!!count && <Counter count={count} size="default" />}
         <div className={cn(styles.img, "pl-4 pr-4")}>
           <img src={image} alt={name} />
         </div>
@@ -44,7 +68,7 @@ export const BurgerIngredient = (props: IngredientData) => {
           {name}
         </div>
       </section>
-      {isModalOpen && ingridientModal}
+      {isModalOpen && <IngredientDetails handleCloseModal={handleCloseModal} />}
     </>
   );
 };

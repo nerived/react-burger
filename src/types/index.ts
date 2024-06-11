@@ -1,3 +1,8 @@
+export type CommonError = {
+  success: false;
+  reason: string;
+};
+
 export type IngredientData = {
   _id: string;
   name: string;
@@ -13,6 +18,8 @@ export type IngredientData = {
   __v: number;
 };
 
+export type Ingredient = IngredientData & { count?: number };
+
 export enum IngredientType {
   BUNN = "bun",
   MAIN = "main",
@@ -27,6 +34,12 @@ export const TYPE_TO_NAME = {
 
 export const TABS = [
   IngredientType.BUNN,
-  IngredientType.SAUCE,
   IngredientType.MAIN,
+  IngredientType.SAUCE,
 ];
+
+export type DNDIngredientItem = {
+  id: string;
+  type: IngredientType;
+  count: number;
+};

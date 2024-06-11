@@ -1,30 +1,54 @@
+import { useCallback, useMemo } from "react";
+import { useSelector } from "react-redux";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { IngredientData } from "../../utils";
+import { RootState, useAppDispatch } from "../../store";
+import {
+  ingredientsSelectors,
+  ingredientDeleted,
+  updateIngredientCount,
+} from "../../services";
+import { ID_SPLITER } from "../../constants";
 
 export type ConstructorItemProps = {
   type?: "bottom" | "top";
-  id: string;
+  modifyId: string;
   prefix?: string;
-  getIngridientById: (id: string) => IngredientData | undefined;
+  extraClass?: string;
 };
 
 export const ConstructorItem = ({
   type,
-  id,
+  modifyId,
   prefix,
-  getIngridientById,
+  extraClass,
 }: ConstructorItemProps) => {
-  const ingridient = getIngridientById(id);
+  const originId = useMemo(() => {
+    return modifyId.split(ID_SPLITER)[0];
+  }, [modifyId]);
 
-  if (!ingridient) {
+  const ingredient = useSelector((state: RootState) => {
+    return ingredientsSelectors.getIngredientById(state, originId);
+  });
+
+  const count = ingredient?.count || 0;
+
+  const dispatch = useAppDispatch();
+
+  const onDelete = useCallback(() => {
+    dispatch(updateIngredientCount({ id: originId, count: count - 1 }));
+
+    dispatch(ingredientDeleted(modifyId));
+  }, [dispatch, modifyId, originId, count]);
+
+  if (!ingredient) {
     return null;
   }
 
-  const { price, name, image } = ingridient;
+  const { price, name, image } = ingredient;
 
   return (
     <>
@@ -42,6 +66,8 @@ export const ConstructorItem = ({
         text={`${name}${prefix ? prefix : ""}`}
         price={price}
         thumbnail={image}
+        handleClose={onDelete}
+        extraClass={extraClass}
       />
     </>
   );
