@@ -1,0 +1,38 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  text-decoration: none;
+  padding: 16px 0;
+  font-family: 'Jet Brains Mono';
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 1.25;
+  color: #8585AD;
+  transition: .3s;
+}
+
+.linkActive {
+  color: #fff
+}
+
+.link:hover {
+  color: #fff
+}
+
+
+.btn {
+  background-color: transparent;
+  text-align: left;
+  outline: none;
+  border: 0;
+  cursor: pointer;
+  color: #8585AD;
+  transition: .3s;
+}
+
+.btn:hover {
+  color: #fff
+}

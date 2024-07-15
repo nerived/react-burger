@@ -1,10 +1,9 @@
 import { useCallback } from "react";
 import cn from "classnames";
 import { useDrop } from "react-dnd";
-import { useSelector } from "react-redux";
 
 import { burgerConstructorSelectors, updateSorting } from "../../services";
-import { useAppDispatch } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { DNDIngredientItem } from "../../types";
 
 import { ConstructorItemDnd } from "../ConstructorItemDnd";
@@ -18,7 +17,7 @@ export type BurgerConstructorMiddleProps = {
 export const BurgerConstructorMiddle = ({
   handleDrop,
 }: BurgerConstructorMiddleProps) => {
-  const ingredientIds = useSelector(
+  const ingredientIds = useAppSelector(
     burgerConstructorSelectors.getConstructorIngredientIds
   );
   const dispatch = useAppDispatch();

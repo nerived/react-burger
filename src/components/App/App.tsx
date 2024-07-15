@@ -1,36 +1,94 @@
 import { useEffect } from "react";
-import cn from "classnames";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+
+import {
+  Constructor,
+  Login,
+  Register,
+  ForgotPassword,
+  ResetPassword,
+  Profile,
+  Ingredient,
+  Ingredients,
+  NotFound,
+  History,
+  HistoryItem,
+  OrderList,
+} from "../../pages";
 
 import { useAppDispatch } from "../../store";
 import { ingredientsThunks } from "../../services";
 
-import { AppHeader } from "../AppHeader";
-import { BurgerConstructor } from "../BurgerConstructor";
-import { BurgerIngredients } from "../BurgerIngredients";
+import { ProtectedRouteElement } from "../../components/ProtectedRouteElement";
 
-import styles from "./App.module.css";
+import { IngredientDetailsModal } from "../IngredientDetailsModal";
 
 export const App = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch(ingredientsThunks.fetchIngredients());
   }, [dispatch]);
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <AppHeader />
-      <main className={cn(styles.main, "pb-4")}>
-        <div className={cn(styles.left, "pl-5 pr-5 pt-10")}>
-          <BurgerIngredients />
-        </div>
-        <div className={cn(styles.right, "pl-5 pr-5")}>
-          <BurgerConstructor />
-        </div>
-      </main>
-    </DndProvider>
+    // <ProvideAuth>
+    <>
+      <Routes location={background || location}>
+        <Route path="/" element={<Constructor />} />
+        <Route
+          path="/login"
+          element={<ProtectedRouteElement element={<Login />} isGuest />}
+        />
+        <Route
+          path="/register"
+          element={<ProtectedRouteElement element={<Register />} isGuest />}
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <ProtectedRouteElement element={<ForgotPassword />} isGuest />
+          }
+        />
+        <Route
+          path="/reset-password"
+          element={
+            <ProtectedRouteElement element={<ResetPassword />} isGuest />
+          }
+        />
+        <Route
+          path="/profile"
+          element={<ProtectedRouteElement element={<Profile />} />}
+        />
+        <Route
+          path="/order-list"
+          element={<ProtectedRouteElement element={<OrderList />} />}
+        />
+        <Route
+          path="/profile/orders"
+          element={<ProtectedRouteElement element={<History />} />}
+        />
+        <Route
+          path="/profile/orders/:id"
+          element={<ProtectedRouteElement element={<HistoryItem />} />}
+        />
+        <Route path="/ingredients" element={<Ingredients />} />
+        <Route path="/ingredients/:id" element={<Ingredient />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      {background && (
+        <Routes>
+          <Route
+            path="/ingredients/:id"
+            element={
+              <IngredientDetailsModal handleCloseModal={() => navigate("/")} />
+            }
+          />
+        </Routes>
+      )}
+    </>
   );
 };
 

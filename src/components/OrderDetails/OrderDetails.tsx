@@ -1,9 +1,9 @@
 import cn from "classnames";
-import { useSelector } from "react-redux";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { ReactComponent as OrderGradient } from "../../images/order-gradient.svg";
+import { useAppSelector } from "../../store";
 import { orderDetailsSelectors } from "../../services";
+import { ReactComponent as OrderGradient } from "../../images/order-gradient.svg";
 
 import { Modal } from "../Modal";
 
@@ -14,7 +14,7 @@ export type OrderDetailsProps = {
 };
 
 export const OrderDetails = ({ handleCloseModal }: OrderDetailsProps) => {
-  const { name = "идентификатор заказа", number } = useSelector(
+  const { name = "идентификатор заказа", number } = useAppSelector(
     orderDetailsSelectors.getOrderDetails
   );
 

@@ -1,7 +1,7 @@
 import { useMemo, useEffect, useState, useCallback } from "react";
-import { useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
 
+import { useAppSelector } from "../../store";
 import { ingredientsSelectors } from "../../services";
 import { Ingredient, IngredientType, TABS } from "../../types";
 import { ingredientsServices } from "../../services";
@@ -17,7 +17,7 @@ export type BurgerIngredientsProps = {
 
 export const BurgerIngredients = () => {
   const [current, setCurrent] = useState<IngredientType>(TABS[0]);
-  const ingredientsData = useSelector(ingredientsSelectors.getIngredients);
+  const ingredientsData = useAppSelector(ingredientsSelectors.getIngredients);
 
   const [sectionBunRef, inViewBun] = useInView({ threshold: 0.05 });
   const [sectionSaucesRef, inViewSauce] = useInView({ threshold: 0.05 });

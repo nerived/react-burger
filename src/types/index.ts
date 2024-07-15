@@ -1,6 +1,6 @@
 export type CommonError = {
   success: false;
-  reason: string;
+  reason?: string;
 };
 
 export type IngredientData = {
