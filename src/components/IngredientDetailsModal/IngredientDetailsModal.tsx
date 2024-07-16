@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Modal } from "../Modal";
 import { IngredientDetailsContent } from "../IngredientDetailsContent";
 
@@ -8,6 +10,14 @@ export type IngredientDetailsModalProps = {
 export const IngredientDetailsModal = ({
   handleCloseModal,
 }: IngredientDetailsModalProps) => {
+  useEffect(() => {
+    window.addEventListener("keydown", handleCloseModal);
+
+    return () => {
+      window.removeEventListener("keydown", handleCloseModal);
+    };
+  }, [handleCloseModal]);
+
   return (
     <Modal
       onClose={handleCloseModal}

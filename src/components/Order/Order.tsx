@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { shallowEqual } from "react-redux";
 import cn from "classnames";
@@ -20,14 +20,16 @@ import {
 import { useModal } from "../../hooks";
 import { useAppDispatch, useAppSelector } from "../../store";
 
+import { Loader } from "../Loader";
 import { OrderDetails } from "../OrderDetails";
 
 import styles from "./Order.module.css";
 
 export const Order = () => {
   const dispatch = useAppDispatch();
-  const { email } = useAppSelector(userSelectors.getUser);
+  const isLoggedIn = useAppSelector(userSelectors.getUserIsLoggedIn);
   const navigate = useNavigate();
+  const [isOrderLoading, setIsOrderLoading] = useState(false);
 
   const ingredients = useAppSelector(ingredientsSelectors.getIngredients);
 
@@ -64,15 +66,17 @@ export const Order = () => {
   }, [closeModal, dispatch]);
 
   const handleOrderClick = useCallback(async () => {
-    if (email) {
+    if (isLoggedIn) {
+      setIsOrderLoading(true);
       await dispatch(orderDetailsThunks.sendOrderData({ ingredients: ids }));
       dispatch(resetIngredientsCount());
       dispatch(resetConstructor());
       openModal();
+      setIsOrderLoading(false);
     } else {
       navigate("/login");
     }
-  }, [openModal, dispatch, ids, navigate, email]);
+  }, [openModal, dispatch, ids, navigate, isLoggedIn]);
 
   return (
     <div className={cn(styles.total, "pt-6 pl-4 pr-4")}>
@@ -87,6 +91,7 @@ export const Order = () => {
       >
         Оформить заказ
       </Button>
+      {isOrderLoading && <Loader />}
       {isModalOpen && <OrderDetails handleCloseModal={handleCloseModal} />}
     </div>
   );

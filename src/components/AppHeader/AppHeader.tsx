@@ -5,6 +5,7 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link as RouterLink } from "react-router-dom";
 
 import { Link } from "./components/Link";
 
@@ -19,7 +20,9 @@ export const AppHeader = () => {
           <Link Icon={ListIcon} to="/order-list" text={"Лента заказов"} />
         </div>
         <div className={styles.middle}>
-          <Logo />
+          <RouterLink to="/">
+            <Logo />
+          </RouterLink>
         </div>
         <div className={styles.right}>
           <Link Icon={ProfileIcon} to="/profile" text={"Личный кабинет"} />

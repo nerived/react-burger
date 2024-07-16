@@ -1,5 +1,5 @@
-import { useEffect, useState, ReactElement, useCallback } from "react";
-import { Navigate } from "react-router-dom";
+import { ReactElement, useState, useCallback, useEffect } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../store";
 import { userSelectors, userThunks } from "../../services";
@@ -13,10 +13,9 @@ export const ProtectedRouteElement = ({
   element: ReactElement;
   isGuest?: boolean;
 }) => {
-  const { email } = useAppSelector(userSelectors.getUser);
-  const dispatch = useAppDispatch();
-
+  const isLoggedIn = useAppSelector(userSelectors.getUserIsLoggedIn);
   const [isUserLoaded, setUserLoaded] = useState(false);
+  const dispatch = useAppDispatch();
 
   const init = useCallback(async () => {
     await dispatch(userThunks.fetchUser());
@@ -27,12 +26,20 @@ export const ProtectedRouteElement = ({
     init();
   }, [init]);
 
+  const location = useLocation();
+  const from = location.state?.from || "/";
+
   if (!isUserLoaded) {
     return <Loader />;
   }
-  if (isGuest) {
-    return email ? <Navigate to="/" replace /> : element;
+
+  if (isGuest && isLoggedIn) {
+    return <Navigate to={from} />;
   }
 
-  return email ? element : <Navigate to="/login" replace />;
+  if (!isGuest && !isLoggedIn) {
+    return <Navigate to="/login" state={{ from: location }} />;
+  }
+
+  return element;
 };
