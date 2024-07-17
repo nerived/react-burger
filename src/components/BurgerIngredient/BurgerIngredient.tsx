@@ -1,34 +1,24 @@
-import { useCallback } from "react";
+import { useDrag } from "react-dnd";
+import { useLocation, useNavigate } from "react-router-dom";
 import cn from "classnames";
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDrag } from "react-dnd";
 
-import { useAppDispatch } from "../../store";
-import { useModal } from "../../hooks";
 import { Ingredient, DNDIngredientItem } from "../../types";
-import { resetIngredientDetails, addIngredientDetails } from "../../services";
-
-import { IngredientDetails } from "../IngredientDetails";
 
 import styles from "./BurgerIngredient.module.css";
 
 export const BurgerIngredient = (props: Ingredient) => {
   const { price, name, image, count = 0, _id, type } = props;
-  const dispatch = useAppDispatch();
-
-  const { isModalOpen, openModal, closeModal } = useModal();
-
-  const handleCloseModal = useCallback(() => {
-    closeModal();
-    dispatch(resetIngredientDetails());
-  }, [closeModal, dispatch]);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleOpenModal = () => {
-    dispatch(addIngredientDetails(props));
-    openModal();
+    navigate(`/ingredients/${props._id}`, {
+      state: { background: location },
+    });
   };
 
   const [{ opacity }, drag] = useDrag<
@@ -68,7 +58,6 @@ export const BurgerIngredient = (props: Ingredient) => {
           {name}
         </div>
       </section>
-      {isModalOpen && <IngredientDetails handleCloseModal={handleCloseModal} />}
     </>
   );
 };

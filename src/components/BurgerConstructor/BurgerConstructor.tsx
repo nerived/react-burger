@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 
-import { useSelector } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 
 import {
@@ -10,7 +9,7 @@ import {
   updateIngredientCount,
 } from "../../services";
 import { IngredientType, DNDIngredientItem } from "../../types";
-import { useAppDispatch } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { ID_SPLITER } from "../../constants";
 
 import { Order } from "../Order";
@@ -18,7 +17,7 @@ import { BurgerConstructorBun } from "../BurgerConstructorBun";
 import { BurgerConstructorMiddle } from "../BurgerConstructorMiddle";
 
 export const BurgerConstructor = () => {
-  const bunId = useSelector(burgerConstructorSelectors.getBunId);
+  const bunId = useAppSelector(burgerConstructorSelectors.getBunId);
   const dispatch = useAppDispatch();
 
   const handleDrop = useCallback(

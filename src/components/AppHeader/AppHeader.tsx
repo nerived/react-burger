@@ -4,8 +4,10 @@ import {
   Logo,
   ListIcon,
   ProfileIcon,
-  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link as RouterLink } from "react-router-dom";
+
+import { Link } from "./components/Link";
 
 import styles from "./AppHeader.module.css";
 
@@ -14,45 +16,16 @@ export const AppHeader = () => {
     <header className={cn("p-4", styles.header)}>
       <div className={styles.inner}>
         <div className={styles.left}>
-          <Button
-            htmlType="button"
-            extraClass={styles.button}
-            type="secondary"
-            size="medium"
-          >
-            <BurgerIcon type="primary" />
-            <span className="pl-2 text text_type_main-default text_color_primary">
-              Конструктор
-            </span>
-          </Button>
-
-          <Button
-            htmlType="button"
-            extraClass={styles.button}
-            type="secondary"
-            size="medium"
-          >
-            <ListIcon type="secondary" />
-            <span className="pl-2 text text_type_main-default text_color_inactive">
-              Лента заказов
-            </span>
-          </Button>
+          <Link Icon={BurgerIcon} to="/" text={"Конструктор"} />
+          <Link Icon={ListIcon} to="/order-list" text={"Лента заказов"} />
         </div>
         <div className={styles.middle}>
-          <Logo />
+          <RouterLink to="/">
+            <Logo />
+          </RouterLink>
         </div>
         <div className={styles.right}>
-          <Button
-            htmlType="button"
-            extraClass={styles.button}
-            type="secondary"
-            size="medium"
-          >
-            <ProfileIcon type="secondary" />
-            <span className="pl-2 text text_type_main-default text_color_inactive">
-              Личный кабинет
-            </span>
-          </Button>
+          <Link Icon={ProfileIcon} to="/profile" text={"Личный кабинет"} />
         </div>
       </div>
     </header>

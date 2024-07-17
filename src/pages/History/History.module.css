@@ -1,0 +1,22 @@
+.box {
+  display: flex;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 120px 10px 0;
+}
+
+.nav {
+  flex-basis: 320px;
+}
+
+.form {
+  flex: 1;
+}
+
+.activeLink {
+  color: #fff;
+}
+
+.link {
+  color: #fff;
+}

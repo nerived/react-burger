@@ -1,11 +1,13 @@
-import { useCallback, useMemo } from "react";
-import { useSelector, shallowEqual } from "react-redux";
+import { useCallback, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { shallowEqual } from "react-redux";
 import cn from "classnames";
 import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import { ID_SPLITER } from "../../constants";
 import {
   orderDetailsThunks,
   resetOrderDetails,
@@ -13,21 +15,25 @@ import {
   burgerConstructorSelectors,
   resetConstructor,
   resetIngredientsCount,
+  userSelectors,
 } from "../../services";
 import { useModal } from "../../hooks";
-import { useAppDispatch, RootState } from "../../store";
-import { ID_SPLITER } from "../../constants";
+import { useAppDispatch, useAppSelector } from "../../store";
 
+import { Loader } from "../Loader";
 import { OrderDetails } from "../OrderDetails";
 
 import styles from "./Order.module.css";
 
 export const Order = () => {
   const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(userSelectors.getUserIsLoggedIn);
+  const navigate = useNavigate();
+  const [isOrderLoading, setIsOrderLoading] = useState(false);
 
-  const ingredients = useSelector(ingredientsSelectors.getIngredients);
+  const ingredients = useAppSelector(ingredientsSelectors.getIngredients);
 
-  const ids = useSelector((state: RootState) => {
+  const ids = useAppSelector((state) => {
     const constructorIngredientIds =
       burgerConstructorSelectors.getConstructorIngredientIds(state);
     const bunId = burgerConstructorSelectors.getBunId(state);
@@ -60,11 +66,17 @@ export const Order = () => {
   }, [closeModal, dispatch]);
 
   const handleOrderClick = useCallback(async () => {
-    await dispatch(orderDetailsThunks.sendOrderData({ ingredients: ids }));
-    dispatch(resetIngredientsCount());
-    dispatch(resetConstructor());
-    openModal();
-  }, [openModal, dispatch, ids]);
+    if (isLoggedIn) {
+      setIsOrderLoading(true);
+      await dispatch(orderDetailsThunks.sendOrderData({ ingredients: ids }));
+      dispatch(resetIngredientsCount());
+      dispatch(resetConstructor());
+      openModal();
+      setIsOrderLoading(false);
+    } else {
+      navigate("/login");
+    }
+  }, [openModal, dispatch, ids, navigate, isLoggedIn]);
 
   return (
     <div className={cn(styles.total, "pt-6 pl-4 pr-4")}>
@@ -79,6 +91,7 @@ export const Order = () => {
       >
         Оформить заказ
       </Button>
+      {isOrderLoading && <Loader />}
       {isModalOpen && <OrderDetails handleCloseModal={handleCloseModal} />}
     </div>
   );

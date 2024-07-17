@@ -1,11 +1,11 @@
 import { useCallback, useMemo } from "react";
-import { useSelector } from "react-redux";
+
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { RootState, useAppDispatch } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import {
   ingredientsSelectors,
   ingredientDeleted,
@@ -30,7 +30,7 @@ export const ConstructorItem = ({
     return modifyId.split(ID_SPLITER)[0];
   }, [modifyId]);
 
-  const ingredient = useSelector((state: RootState) => {
+  const ingredient = useAppSelector((state) => {
     return ingredientsSelectors.getIngredientById(state, originId);
   });
 
