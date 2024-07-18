@@ -34,7 +34,6 @@ export const App = () => {
   }, [dispatch]);
 
   return (
-    // <ProvideAuth>
     <>
       <Routes location={background || location}>
         <Route path="/" element={<Constructor />} />
