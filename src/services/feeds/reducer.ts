@@ -28,13 +28,16 @@ export const feedSlice = createSlice({
         state.state = ConnctionState.CLOSED;
       }
     },
+    send: (state) => {
+      return state;
+    },
     setMessage: (state, action) => {
       Object.assign(state, action.payload);
     },
   },
 });
 
-export const { initStart, initSuccess, initError, close, setMessage } =
+export const { initStart, initSuccess, initError, close, setMessage, send } =
   feedSlice.actions;
 
 export const feedReducer = feedSlice.reducer;

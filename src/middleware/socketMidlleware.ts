@@ -18,7 +18,7 @@ export const socketMidlleware = (
       return (action: any) => {
         const { dispatch, getState } = store;
         const { type } = action;
-        const { initStart, initSuccess, initError, close, setMessage } =
+        const { initStart, initSuccess, initError, close, setMessage, send } =
           actions;
         const isLoggedIn = userSelectors.getUserIsLoggedIn(getState());
         const historyState = historySelectors.getHistoryState(getState());
@@ -58,6 +58,9 @@ export const socketMidlleware = (
           socket.onclose = (event) => {
             dispatch(close());
           };
+        }
+        if (socket && type === send.type) {
+          socket.send(JSON.stringify(action.payload));
         }
         next(action);
       };
