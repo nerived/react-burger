@@ -12,8 +12,8 @@ import {
   Ingredients,
   NotFound,
   History,
-  HistoryItem,
-  OrderList,
+  FeedList,
+  Feed,
 } from "../../pages";
 
 import { useAppDispatch } from "../../store";
@@ -22,6 +22,7 @@ import { ingredientsThunks } from "../../services";
 import { ProtectedRouteElement } from "../../components/ProtectedRouteElement";
 
 import { IngredientDetailsModal } from "../IngredientDetailsModal";
+import { FeedDetailsModal } from "../FeedDetailsModal";
 
 export const App = () => {
   const location = useLocation();
@@ -62,19 +63,21 @@ export const App = () => {
           element={<ProtectedRouteElement element={<Profile />} />}
         />
         <Route
-          path="/order-list"
-          element={<ProtectedRouteElement element={<OrderList />} />}
-        />
-        <Route
           path="/profile/orders"
           element={<ProtectedRouteElement element={<History />} />}
         />
         <Route
           path="/profile/orders/:id"
-          element={<ProtectedRouteElement element={<HistoryItem />} />}
+          element={
+            <ProtectedRouteElement element={<Feed isProfile={true} />} />
+          }
         />
         <Route path="/ingredients" element={<Ingredients />} />
         <Route path="/ingredients/:id" element={<Ingredient />} />
+
+        <Route path="/feed" element={<FeedList />} />
+        <Route path="/feed/:id" element={<Feed />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
       {background && (
@@ -83,6 +86,20 @@ export const App = () => {
             path="/ingredients/:id"
             element={
               <IngredientDetailsModal handleCloseModal={() => navigate("/")} />
+            }
+          />
+          <Route
+            path="/feed/:id"
+            element={
+              <FeedDetailsModal handleCloseModal={() => navigate("/feed")} />
+            }
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <FeedDetailsModal
+                handleCloseModal={() => navigate("/profile/orders")}
+              />
             }
           />
         </Routes>

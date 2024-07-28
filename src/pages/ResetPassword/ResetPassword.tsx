@@ -31,7 +31,6 @@ export const ResetPassword = () => {
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const res = await sendNewPassword(values);
-      console.log("res", res);
       if (res?.success) {
         navigate("/");
       }

@@ -43,3 +43,27 @@ export type DNDIngredientItem = {
   type: IngredientType;
   count: number;
 };
+
+export enum ConnctionState {
+  INITIAL = "initial",
+  CONNECTING = "connecting",
+  CONNECTED = "connected",
+  CLOSED = "closed",
+  ERROR = "error",
+}
+
+export enum OrderStatus {
+  DONE = "done",
+  CREATED = "created",
+  PENDING = "pending",
+}
+
+export type TOrder = {
+  ingredients: string[];
+  _id: string;
+  status: OrderStatus;
+  number: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};

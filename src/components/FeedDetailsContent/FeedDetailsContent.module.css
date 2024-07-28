@@ -1,0 +1,38 @@
+.contetn {
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.number {
+  text-align: center;
+}
+
+.completed {
+  color: #00CCCC;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+
+.footer {
+  display: flex;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  flex-shrink: 0;
+}

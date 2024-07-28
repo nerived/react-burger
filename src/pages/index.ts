@@ -8,8 +8,8 @@ import { Ingredient } from "./Ingredient";
 import { Ingredients } from "./Ingredients";
 import { NotFound } from "./NotFound";
 import { History } from "./History";
-import { HistoryItem } from "./HistoryItem";
-import { OrderList } from "./OrderList";
+import { FeedList } from "./FeedList";
+import { Feed } from "./Feed";
 
 export {
   Constructor,
@@ -22,6 +22,6 @@ export {
   Ingredients,
   NotFound,
   History,
-  HistoryItem,
-  OrderList,
+  FeedList,
+  Feed,
 };
