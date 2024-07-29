@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import cn from "classnames";
 import { useParams, useLocation } from "react-router-dom";
 
@@ -9,7 +10,11 @@ import {
 import { useAppSelector } from "../../store";
 import { STATUS_MAP } from "../../constants";
 import { OrderStatus } from "../../types";
-import { feedsSelectors, ingredientsSelectors } from "../../services";
+import {
+  feedsSelectors,
+  ingredientsSelectors,
+  ingredientsServices,
+} from "../../services";
 import { historySelectors } from "../../services/history";
 
 import { FeedShort } from "../FeedShort";
@@ -34,12 +39,14 @@ export const FeedDetailsContent = ({
       : feedsSelectors.getFeedByNumber(state, id);
   });
 
-  const preparedData = useAppSelector((state) => {
-    return ingredientsSelectors.getTotalForShortFeed(
-      state,
+  const ingredients = useAppSelector(ingredientsSelectors.getIngredients);
+
+  const preparedData = useMemo(() => {
+    return ingredientsServices.getTotalForShortFeed(
+      ingredients,
       details?.ingredients || []
     );
-  });
+  }, [ingredients, details]);
 
   if (!details) {
     return null;
@@ -51,7 +58,7 @@ export const FeedDetailsContent = ({
         <div
           className={cn(styles.number, "text text_type_digits-default mb-10")}
         >
-          #${details.number}
+          #{details.number}
         </div>
       )}
       <div className="mb-15">

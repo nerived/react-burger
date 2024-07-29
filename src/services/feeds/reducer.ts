@@ -24,9 +24,7 @@ export const feedSlice = createSlice({
       state.state = ConnctionState.ERROR;
     },
     close: (state) => {
-      if (state.state !== ConnctionState.CONNECTING) {
-        state.state = ConnctionState.CLOSED;
-      }
+      state.state = ConnctionState.CLOSED;
     },
     send: (state) => {
       return state;

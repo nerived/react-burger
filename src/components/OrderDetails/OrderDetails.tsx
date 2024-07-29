@@ -14,15 +14,12 @@ export type OrderDetailsProps = {
 };
 
 export const OrderDetails = ({ handleCloseModal }: OrderDetailsProps) => {
-  const { name = "идентификатор заказа", number } = useAppSelector(
+  const { name, number } = useAppSelector(
     orderDetailsSelectors.getOrderDetails
   );
 
   return (
-    <Modal
-      onClose={handleCloseModal}
-      header={<h3 className="text text_type_main-large">Детали ингредиента</h3>}
-    >
+    <Modal onClose={handleCloseModal}>
       <div className={styles.contetn}>
         <p className="text text_type_digits-large pb-8">{number}</p>
         <p className="text text_type_main-medium pb-15">{name}</p>

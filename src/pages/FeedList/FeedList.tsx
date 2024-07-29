@@ -12,7 +12,6 @@ import styles from "./FeedList.module.css";
 
 export const FeedList = () => {
   const feeds = useAppSelector(feedsSelectors.getFeeds);
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {

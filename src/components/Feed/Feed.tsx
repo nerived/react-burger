@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import cn from "classnames";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -9,7 +10,10 @@ import {
 import { useAppSelector } from "../../store";
 import { STATUS_MAP } from "../../constants";
 import { OrderStatus, TOrder } from "../../types";
-import { ingredientsSelectors } from "../../services/ingredients";
+import {
+  ingredientsSelectors,
+  ingredientsServices,
+} from "../../services/ingredients";
 
 import { FeedImage } from "../FeedImage";
 
@@ -22,9 +26,14 @@ export const Feed = (props: FeedProps) => {
 
   const isHistory = route === "/profile/orders";
 
-  const { items, total } = useAppSelector((state) => {
-    return ingredientsSelectors.getIngredientsForFeed(state, ingredients);
-  });
+  const ingredientsData = useAppSelector(ingredientsSelectors.getIngredients);
+
+  const { items, total } = useMemo(() => {
+    return ingredientsServices.getIngredientsForFeed(
+      ingredientsData,
+      ingredients
+    );
+  }, [ingredientsData, ingredients]);
 
   const navigate = useNavigate();
   const location = useLocation();

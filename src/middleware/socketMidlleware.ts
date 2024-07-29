@@ -1,12 +1,10 @@
 import { Middleware, MiddlewareAPI } from "redux";
 
 import { AppDispatch, RootState } from "../store";
-import { ConnctionState } from "../types";
-import { feedSlice, feedsSelectors } from "../services/feeds";
-import { historySlice, historySelectors } from "../services/history";
+import { feedSlice } from "../services/feeds";
+import { historySlice } from "../services/history";
 import { userSelectors } from "../services/user";
 import * as storage from "../services/storage";
-import { WS_FEED_URL } from "../constants";
 
 export const socketMidlleware = (
   url: string,
@@ -21,12 +19,8 @@ export const socketMidlleware = (
         const { initStart, initSuccess, initError, close, setMessage, send } =
           actions;
         const isLoggedIn = userSelectors.getUserIsLoggedIn(getState());
-        const historyState = historySelectors.getHistoryState(getState());
-        const feedsState = feedsSelectors.getFeedsState(getState());
 
-        const state = url === WS_FEED_URL ? feedsState : historyState;
-
-        if (type === initStart.type && state !== ConnctionState.CONNECTING) {
+        if (type === initStart.type) {
           let token = storage.get("accessToken");
 
           socket = new WebSocket(
@@ -49,11 +43,7 @@ export const socketMidlleware = (
             success && dispatch(setMessage(parsedData));
           };
         }
-        if (
-          socket &&
-          type === close.type &&
-          state !== ConnctionState.CONNECTING
-        ) {
+        if (socket && type === close.type) {
           socket.close(1000);
           socket.onclose = (event) => {
             dispatch(close());

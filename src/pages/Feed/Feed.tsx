@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { PageLayout } from "../../components/PageLayout";
 import { FeedDetailsContent } from "../../components/FeedDetailsContent";
 
-import { useAppDispatch, useAppSelector } from "../../store";
-import { feedSlice, feedsSelectors } from "../../services/feeds";
-import { historySlice, historySelectors } from "../../services/history";
+import { useAppDispatch } from "../../store";
+import { feedSlice } from "../../services/feeds";
+import { historySlice } from "../../services/history";
 
 import styles from "./Feed.module.css";
 
@@ -14,10 +14,6 @@ type FeedProps = {
 };
 
 export const Feed = ({ isProfile = false }: FeedProps) => {
-  const feedsState = useAppSelector(feedsSelectors.getFeedsState);
-  const historyState = useAppSelector(historySelectors.getHistoryState);
-  let state = isProfile ? historyState : feedsState;
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -32,7 +28,7 @@ export const Feed = ({ isProfile = false }: FeedProps) => {
         isProfile ? historySlice.actions.close() : feedSlice.actions.close()
       );
     };
-  }, [dispatch, state, isProfile]);
+  }, [dispatch, isProfile]);
 
   return (
     <PageLayout>
