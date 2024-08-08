@@ -1,0 +1,31 @@
+.imgBox {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+  margin-left: -16px;
+}
+
+.imgBox:first-child {
+  margin-left: 0;
+}
+
+.inner {
+  background-color: #131316;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.imgBox img {
+  max-height: 56px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -1,15 +1,18 @@
 import { useEffect, useCallback } from "react";
+import { useParams } from "react-router-dom";
 
 import { Modal } from "../Modal";
-import { IngredientDetailsContent } from "../IngredientDetailsContent";
+import { FeedDetailsContent } from "../FeedDetailsContent";
 
-export type IngredientDetailsModalProps = {
+export type FeedDetailsModalProps = {
   handleCloseModal: () => void;
 };
 
-export const IngredientDetailsModal = ({
+export const FeedDetailsModal = ({
   handleCloseModal,
-}: IngredientDetailsModalProps) => {
+}: FeedDetailsModalProps) => {
+  const { id } = useParams<{ id: string }>();
+
   const handleEscapePress = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -30,11 +33,11 @@ export const IngredientDetailsModal = ({
   return (
     <Modal
       onClose={handleCloseModal}
-      header={<h3 className="text text_type_main-large">Детали ингредиента</h3>}
+      header={<h3 className="text text_type_digits-default">#{id}</h3>}
     >
-      <IngredientDetailsContent />
+      <FeedDetailsContent isModal />
     </Modal>
   );
 };
 
-export default IngredientDetailsModal;
+export default FeedDetailsModal;

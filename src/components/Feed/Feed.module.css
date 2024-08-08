@@ -1,0 +1,43 @@
+.feed {
+  border-radius: 40px;
+  background: #1C1C21;
+  width: 100%;
+  min-height: 80px;
+  font-family: 'Jet Brains Mono';
+  color: #F2F2F3;
+  flex-grow: 1;
+  cursor: pointer;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+}
+
+.time {
+  margin-left: auto;
+  flex-shrink: 0;
+
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+
+.completed {
+  color: #00CCCC;
+}

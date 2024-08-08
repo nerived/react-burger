@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_DOMAIN } from "../../constants";
 import { CommonError } from "../../types";
 import { request } from "../../api";
+import * as storage from "../storage";
 
 import { OrderDetailsState } from "./types";
 
@@ -22,11 +23,15 @@ export const sendOrderData = createAsyncThunk<
     rejectValue: CommonError;
   }
 >("orderDetails/order", async (data, { fulfillWithValue, rejectWithValue }) => {
+  const token = storage.get("accessToken");
+
   const value = await request<OrderDetailsValue>(`${API_DOMAIN}/orders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
+      authorization: token ? "Bearer " + token : "",
     },
+
     body: JSON.stringify(data),
   });
 

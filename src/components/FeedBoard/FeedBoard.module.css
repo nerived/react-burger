@@ -1,0 +1,33 @@
+.board {
+  display: flex;
+  font-family: 'Jet Brains Mono';
+  font-size: 16px;
+  line-height: 1.5;
+  flex-wrap: wrap;
+}
+
+.left,
+.right {
+  margin-top: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 4px;
+}
+
+
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  flex-shrink: 0;
+}
+
+
+.completed {
+  color: #00CCCC;
+}

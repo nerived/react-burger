@@ -17,7 +17,7 @@ export const AppHeader = () => {
       <div className={styles.inner}>
         <div className={styles.left}>
           <Link Icon={BurgerIcon} to="/" text={"Конструктор"} />
-          <Link Icon={ListIcon} to="/order-list" text={"Лента заказов"} />
+          <Link Icon={ListIcon} to="/feed" text={"Лента заказов"} />
         </div>
         <div className={styles.middle}>
           <RouterLink to="/">
