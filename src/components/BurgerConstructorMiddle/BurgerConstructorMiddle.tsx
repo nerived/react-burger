@@ -48,7 +48,11 @@ export const BurgerConstructorMiddle = ({
 
   if (!ingredientIds.length) {
     return (
-      <div className={styles.empty} ref={dropTarget}>
+      <div
+        className={styles.empty}
+        ref={dropTarget}
+        data-testid="constructor-empty"
+      >
         <p
           className={cn(
             styles.emptyContent,
@@ -66,6 +70,7 @@ export const BurgerConstructorMiddle = ({
     <ul
       className={cn(styles.list, isHover && styles.highlight, "pl-4 pr-4 ")}
       ref={dropTarget}
+      data-testid="constructor"
     >
       {ingredientIds.map((ingredientId, index) => {
         return (

@@ -19,10 +19,20 @@ export const OrderDetails = ({ handleCloseModal }: OrderDetailsProps) => {
   );
 
   return (
-    <Modal onClose={handleCloseModal}>
+    <Modal onClose={handleCloseModal} testId="order">
       <div className={styles.contetn}>
-        <p className="text text_type_digits-large pb-8">{number}</p>
-        <p className="text text_type_main-medium pb-15">{name}</p>
+        <p
+          className="text text_type_digits-large pb-8"
+          data-testid="order-number"
+        >
+          {number}
+        </p>
+        <p
+          className="text text_type_main-medium pb-15"
+          data-testid="order-name"
+        >
+          {name}
+        </p>
         <div className={cn(styles.icon, "mb-15")}>
           <OrderGradient />
           <div className={styles.mark}>

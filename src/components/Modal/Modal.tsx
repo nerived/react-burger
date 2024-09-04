@@ -11,11 +11,12 @@ const modalRoot = document.getElementById("modal");
 export type ModalProps = PropsWithChildren & {
   header?: JSX.Element;
   onClose: () => void;
+  testId: string;
 };
 
-export const Modal = ({ children, header, onClose }: ModalProps) => {
+export const Modal = ({ children, header, onClose, testId }: ModalProps) => {
   return ReactDOM.createPortal(
-    <div className={styles.root}>
+    <div className={styles.root} data-testid={`modal-${testId}`}>
       <ModalOverlay onClose={onClose} />
       <div className={cn(styles.modal, "p-10")}>
         <ModalHeader onClose={onClose}>{header}</ModalHeader>

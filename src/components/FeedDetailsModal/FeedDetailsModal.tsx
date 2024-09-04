@@ -34,6 +34,7 @@ export const FeedDetailsModal = ({
     <Modal
       onClose={handleCloseModal}
       header={<h3 className="text text_type_digits-default">#{id}</h3>}
+      testId="feed"
     >
       <FeedDetailsContent isModal />
     </Modal>

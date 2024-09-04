@@ -3,14 +3,14 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { burgerConstructorState } from "./types";
 
-const initialState: burgerConstructorState = {
+export const burgerConstructorInitialState: burgerConstructorState = {
   bunId: "",
   ingredientIds: [],
 };
 
 export const burgerConstructorSlice = createSlice({
   name: "burgerConstructor",
-  initialState,
+  initialState: burgerConstructorInitialState,
   reducers: {
     updateBunId: (state, action: PayloadAction<string>) => {
       state.bunId = action.payload;
@@ -28,7 +28,7 @@ export const burgerConstructorSlice = createSlice({
       state.ingredientIds = newIngredientIds;
     },
     resetConstructor: () => {
-      return initialState;
+      return burgerConstructorInitialState;
     },
   },
 });

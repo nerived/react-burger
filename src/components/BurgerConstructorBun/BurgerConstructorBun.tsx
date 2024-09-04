@@ -35,7 +35,11 @@ export const BurgerConstructorBun = ({
   });
 
   return (
-    <section className={cn(styles.start, "pl-4 pr-4 pb-4")} ref={dropTarget}>
+    <section
+      className={cn(styles.start, "pl-4 pr-4 pb-4")}
+      ref={dropTarget}
+      data-testid="constructor-bun"
+    >
       <ConstructorItem
         type={type}
         modifyId={bunId}

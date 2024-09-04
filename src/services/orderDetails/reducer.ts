@@ -3,17 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 import { sendOrderData } from "./thunks";
 import { OrderDetailsState } from "./types";
 
-const initialState: OrderDetailsState = {
+export const orderDetailsInitialState: OrderDetailsState = {
   name: "",
   number: 0,
 };
 
 export const orderDetailsSlice = createSlice({
   name: "orderDetails",
-  initialState,
+  initialState: orderDetailsInitialState,
   reducers: {
     resetOrderDetails: (state) => {
-      return initialState;
+      return orderDetailsInitialState;
     },
   },
   extraReducers: (builder) => {
@@ -23,7 +23,7 @@ export const orderDetailsSlice = createSlice({
       })
 
       .addCase(sendOrderData.rejected, (state) => {
-        return initialState;
+        return orderDetailsInitialState;
       });
   },
 });

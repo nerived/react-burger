@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ConnctionState } from "../../types";
 import { HistoryState } from "./types";
 
-const initialState: HistoryState = {
+export const historyInitialState: HistoryState = {
   state: ConnctionState.INITIAL,
   orders: [],
   total: null,
@@ -12,7 +12,7 @@ const initialState: HistoryState = {
 
 export const historySlice = createSlice({
   name: "history",
-  initialState,
+  initialState: historyInitialState,
   reducers: {
     initStart: (state) => {
       state.state = ConnctionState.CONNECTING;

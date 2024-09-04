@@ -13,7 +13,12 @@ export const ModalHeader = ({ children, onClose }: ModalHeaderProps) => {
   return (
     <div className={cn(styles.header, "pt-2 pb-2")}>
       {children}
-      <button type="button" className={styles.close} onClick={onClose}>
+      <button
+        type="button"
+        className={styles.close}
+        onClick={onClose}
+        data-testid="modal-close"
+      >
         <CloseIcon type="primary" />
       </button>
     </div>

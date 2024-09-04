@@ -36,6 +36,7 @@ export const BurgerIngredient = (props: Ingredient) => {
   return (
     <>
       <section
+        data-testid={props._id}
         className={styles.item}
         onClick={handleOpenModal}
         draggable
