@@ -31,6 +31,7 @@ export const IngredientDetailsModal = ({
     <Modal
       onClose={handleCloseModal}
       header={<h3 className="text text_type_main-large">Детали ингредиента</h3>}
+      testId="ingredient"
     >
       <IngredientDetailsContent />
     </Modal>

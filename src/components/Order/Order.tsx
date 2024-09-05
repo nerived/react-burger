@@ -88,6 +88,7 @@ export const Order = () => {
         size="large"
         disabled={!ids[0]}
         onClick={handleOrderClick}
+        data-testid="place-order-button"
       >
         Оформить заказ
       </Button>

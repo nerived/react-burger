@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ConnctionState } from "../../types";
 import { FeedState } from "./types";
 
-const initialState: FeedState = {
+export const feedsInitialState: FeedState = {
   state: ConnctionState.INITIAL,
   orders: [],
   total: null,
@@ -12,7 +12,7 @@ const initialState: FeedState = {
 
 export const feedSlice = createSlice({
   name: "feeds",
-  initialState,
+  initialState: feedsInitialState,
   reducers: {
     initStart: (state) => {
       state.state = ConnctionState.CONNECTING;

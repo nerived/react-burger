@@ -5,11 +5,11 @@ import { Ingredient } from "../../types";
 
 import { fetchIngredients } from "./thunks";
 
-const initialState: Ingredient[] = [];
+export const ingredientsInitialState: Ingredient[] = [];
 
 export const ingredientSlice = createSlice({
   name: "ingredients",
-  initialState,
+  initialState: ingredientsInitialState,
   reducers: {
     updateIngredientCount: (
       state,
@@ -30,7 +30,7 @@ export const ingredientSlice = createSlice({
     },
 
     resetIngredients: (state) => {
-      return initialState;
+      return ingredientsInitialState;
     },
   },
   extraReducers: (builder) => {
@@ -40,7 +40,7 @@ export const ingredientSlice = createSlice({
       })
 
       .addCase(fetchIngredients.rejected, (state) => {
-        return initialState;
+        return ingredientsInitialState;
       });
   },
 });
