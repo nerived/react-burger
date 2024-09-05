@@ -1,6 +1,7 @@
 # The application is deployed on Github Pages
 
 [React Stellaris Burger app](https://github.com/facebook/create-react-app)
+
 Direct link [https://github.com/facebook/create-react-app](https://github.com/facebook/create-react-app)
 
 # Getting Started with Create React App
